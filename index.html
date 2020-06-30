@@ -1,0 +1,2985 @@
+<!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Item Lister</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
+  <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+   .box {
+    width: 200px;
+    padding: 25px 80px;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 30px;
+    
+ 
+   }
+ 
+   .green {
+    background-color: green;
+   }
+ 
+   .blue {
+    background-color: dodgerblue;
+   }
+ 
+   .orange {
+    background-color: orangered;
+   }
+ 
+ 
+ 
+   * {}
+ 
+   .clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+   }
+ 
+   body {
+   background-Color:skyb;
+    color: #555;
+    font-family: Open Sans;
+    font-size: 16px;
+    position: relative;
+    height: 100vh;
+    font-weight: 400;
+   }
+ 
+   .right {
+    float: right;
+   }
+ 
+   .red {
+    color: #FF5049 !important;
+   }
+ 
+   .red-focus:focus {
+    border: 1px solid #FF5049 !important;
+   }
+ 
+   /**********************************************
+ *** TOP PART
+ **********************************************/
+ 
+   .top {
+    height: 40vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(back.png);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+   }
+ 
+   .budget {
+    position: absolute;
+    width: 350px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+   }
+ 
+   .budget__title {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 300;
+   }
+ 
+   .budget__value {
+    font-weight: 300;
+    font-size: 46px;
+    text-align: center;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+   }
+ 
+   .budget__income,
+   .budget__expenses {
+    padding: 12px;
+    text-transform: uppercase;
+   }
+ 
+   .budget__income {
+    margin-bottom: 10px;
+    background-color: #28B9B5;
+   }
+ 
+   .budget__expenses {
+    background-color: #FF5049;
+   }
+ 
+   .budget__income--text,
+   .budget__expenses--text {
+    float: left;
+    font-size: 13px;
+    color: #444;
+    margin-top: 2px;
+   }
+ 
+   .budget__income--value,
+   .budget__expenses--value {
+    letter-spacing: 1px;
+    float: left;
+   }
+ 
+   .budget__income--percentage,
+   .budget__expenses--percentage {
+    float: left;
+    width: 34px;
+    font-size: 11px;
+    padding: 3px 0;
+    margin-left: 10px;
+   }
+ 
+   .budget__expenses--percentage {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-align: center;
+    border-radius: 3px;
+   }
+ 
+ 
+   /**********************************************
+ *** BOTTOM PART
+ **********************************************/
+ 
+   /***** FORM *****/
+   .add {
+    padding: 14px;
+    border-bottom: 1px solid #e7e7e7;
+    background-color: #f7f7f7;
+   }
+ 
+   .add__container {
+    margin: 0 auto;
+    text-align: center;
+   }
+ 
+   .add__type {
+    width: 55px;
+    border: 1px solid #e7e7e7;
+    height: 44px;
+    font-size: 18px;
+    color: inherit;
+    background-color: #fff;
+    margin-right: 10px;
+    font-weight: 300;
+    transition: border 0.3s;
+   }
+ 
+   .add__description,
+   .add__value {
+    border: 1px solid #e7e7e7;
+    background-color: #fff;
+    color: inherit;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 12px 15px;
+    margin-right: 10px;
+    border-radius: 5px;
+    transition: border 0.3s;
+   }
+ 
+   .add__description {
+    width: 400px;
+   }
+ 
+   .add__value {
+    width: 100px;
+   }
+ 
+   .add__btn {
+    font-size: 35px;
+    background: none;
+    border: none;
+    color: #28B9B5;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.1;
+    margin-left: 10px;
+   }
+ 
+   .add__btn:active {
+    transform: translateY(2px);
+   }
+ 
+   .add__type:focus,
+   .add__description:focus,
+   .add__value:focus {
+    outline: none;
+    border: 1px solid #28B9B5;
+   }
+ 
+   .add__btn:focus {
+    outline: none;
+   }
+ 
+   /***** LISTS *****/
+   .container {
+    width: 1000px;
+    margin: 60px auto;
+   }
+ 
+   .income {
+    float: left;
+    width: 475px;
+    margin-right: 50px;
+   }
+ 
+   .expenses {
+    float: left;
+    width: 475px;
+   }
+ 
+   h2 {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 15px;
+   }
+ 
+   .icome__title {
+    color: #28B9B5;
+   }
+ 
+   .expenses__title {
+    color: #FF5049;
+   }
+ 
+   .item {
+    padding: 13px;
+    border-bottom: 1px solid #e7e7e7;
+   }
+ 
+   .item:first-child {
+    border-top: 1px solid #e7e7e7;
+   }
+ 
+   .item:nth-child(even) {
+    background-color: #f7f7f7;
+   }
+ 
+   .item__description {
+    float: left;
+   }
+ 
+   .item__value {
+    float: left;
+    transition: transform 0.3s;
+   }
+ 
+   .item__percentage {
+    float: left;
+    margin-left: 20px;
+    transition: transform 0.3s;
+    font-size: 11px;
+    background-color: #FFDAD9;
+    padding: 3px;
+    border-radius: 3px;
+    width: 32px;
+    text-align: center;
+   }
+ 
+   .income .item__value,
+   .income .item__delete--btn {
+    color: #28B9B5;
+   }
+ 
+   .expenses .item__value,
+   .expenses .item__percentage,
+   .expenses .item__delete--btn {
+    color: #FF5049;
+   }
+ 
+ 
+   .item__delete {
+    float: left;
+   }
+ 
+   .item__delete--btn {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    display: none;
+   }
+ 
+   .item__delete--btn:focus {
+    outline: none;
+   }
+ 
+   .item__delete--btn:active {
+    transform: translateY(2px);
+   }
+ 
+   .item:hover .item__delete--btn {
+    display: block;
+   }
+ 
+   .item:hover .item__value {
+    transform: translateX(-20px);
+   }
+ 
+   .item:hover .item__percentage {
+    transform: translateX(-20px);
+   }
+ 
+ 
+   .unpaid {
+    background-color: #FFDAD9 !important;
+    cursor: pointer;
+    color: #FF5049;
+ 
+   }
+ 
+   .unpaid .item__percentage {
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+   }
+ 
+   .unpaid:hover .item__description {
+    font-weight: 900;
+   }
+  </style>
+ </head>
+ 
+ <body>
+  <div>
+   <marquee behavior="80px" direction="left">
+    <h1 class="Welcome" `>
+     Get Ready for the Future: ES6 / ES2015
+    </h1>
+   </marquee>
+  </div>
+  <div class="box green">I'm green!</div><br />
+  <div class="box blue">I'm blue!</div>
+  <br />
+  <div class="box orange">I'm orange!</div>
+  <br />
+  <div class="container">
+   <h1 id="header-title">
+    Item Lister <span style="display: none;">123</span>
+   </h1>
+  </div>
+  <header id="main-header" class="bg-success text-white p-4 mb-3">
+   <div class="container">
+    <h1 id="header-title">
+     Item Lister <span style="display: none;">123</span>
+    </h1>
+   </div>
+  </header>
+  <div class="container" style=>
+   <div id="main" class="card card-body">
+    <h2 class="title">Add Items</h2>
+    <form class="form-inline mb-3">
+     <input type="text" class="form-control mr-2" />
+     <select class="form-control mr-2">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+     </select>
+     <input type="submit" class="btn btn-dark" value="Submit" />
+    </form>
+    <h2 class="title">Items</h2>
+    <ul id="items" class="list-group">
+     <li class="list-group-item">Item 1</li>
+     <li class="list-group-item">Item 2</li>
+     <li class="list-group-item">Item 3</li>
+     <li class="list-group-item">Item 4</li>
+    </ul>
+    <div id="output"></div>
+    <br />
+    <button class="btn btn-dark btn-block" id="button">Click Here</button>
+    <br />
+    <div id="box" style="width: 400px; height: 200px; background: #f4f4f4;">
+     <h3>HELLO</h3>
+    </div>
+   </div>
+  </div>
+  <div class="top">
+   <div class="budget">
+    <div class="budget__title">
+     Available Budget in <span class="budget__title--month">%Month%</span>:
+    </div>
+    <div class="budget__value">+ 2,345.64</div>
+    <div class="budget__income clearfix">
+     <div class="budget__income--text">Income</div>
+     <div class="right">
+      <div class="budget__income--value">+ 4,300.00</div>
+      <div class="budget__income--percentage">&nbsp;</div>
+     </div>
+    </div>
+    <div class="budget__expenses clearfix">
+     <div class="budget__expenses--text">Expenses</div>
+     <div class="right clearfix">
+      <div class="budget__expenses--value">- 1,954.36</div>
+      <div class="budget__expenses--percentage">45%</div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="bottom">
+   <div class="add">
+    <div class="add__container">
+     <select class="add__type">
+      <option value="inc" selected>+</option>
+      <option value="exp">-</option>
+     </select>
+     <input type="text" class="add__description" placeholder="Add description">
+     <input type="number" class="add__value" placeholder="Value">
+     <button class="add__btn"><i class="ion-ios-checkmark-outline"></i></button>
+    </div>
+   </div>
+   <div class="container clearfix">
+    <div class="income">
+     <h2 class="icome__title">Income</h2>
+     <div class="income__list">
+      <!--
+                         <div class="item clearfix" id="income-0">
+                             <div class="item__description">Salary</div>
+                             <div class="right clearfix">
+                                 <div class="item__value">+ 2,100.00</div>
+                                 <div class="item__delete">
+                                     <button class="item__delete--btn">
+                                         <i class="ion-ios-close-outline"></i>
+                                     </button>
+                                 </div>
+                             </div>
+                         </div>
+                         
+                         <div class="item clearfix" id="income-1">
+                             <div class="item__description">Sold car</div>
+                             <div class="right clearfix">
+                                 <div class="item__value">+ 1,500.00</div>
+                                 <div class="item__delete">
+                                     <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                                 </div>
+                             </div>
+                         </div>
+                         -->
+     </div>
+    </div>
+    <div class="expenses">
+     <h2 class="expenses__title">Expenses</h2>
+     <div class="expenses__list">
+      <!--
+                         <div class="item clearfix" id="expense-0">
+                             <div class="item__description">Apartment rent</div>
+                             <div class="right clearfix">
+                                 <div class="item__value">- 900.00</div>
+                                 <div class="item__percentage">21%</div>
+                                 <div class="item__delete">
+                                     <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                                 </div>
+                             </div>
+                         </div>
+ 
+                         <div class="item clearfix" id="expense-1">
+                             <div class="item__description">Grocery shopping</div>
+                             <div class="right clearfix">
+                                 <div class="item__value">- 435.28</div>
+                                 <div class="item__percentage">10%</div>
+                                 <div class="item__delete">
+                                     <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                                 </div>
+                             </div>
+                         </div>
+                         -->
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+   ///* Variables and datatypes */
+   
+   var firstName = "Gazibur";
+   console.log(firstName); //Gazibur//
+   
+   var lastName = "Rahman";
+   var age = 28;
+   
+   var fullAge = true;
+   console.log(fullAge); //true//
+   
+   var job;
+   console.log(job); //undefined//
+   
+   job = "Teacher";
+   console.log(job); //Teacher//
+   
+   // Variable naming rules
+   var _3years = 3;
+   var GaziburJunaid = "Gazibur and Junaid";
+   // var if = 23;
+   
+   /*****************************
+    * Variable mutation and type coercion
+    */
+   
+   var firstName = "Gazibur";
+   var age = 28;
+   
+   // Type coercion
+   console.log(firstName + " " + age); //Gazibur 28//
+   
+   var job, isMarried;
+   job = "teacher";
+   isMarried = false;
+   
+   console.log(
+    firstName +
+    " is a " +
+    age +
+    " year old " +
+    job +
+    ". Is he married? " +
+    isMarried
+   ); //Gazibur is a 28 year old teacher. Is he married? false//
+   
+   // Variable mutation
+   age = "twenty eight";
+   job = "driver";
+   
+   console.log(
+    firstName +
+    " is a " +
+    age +
+    " year old " +
+    job +
+    ". Is he married? " +
+    isMarried
+   );
+   
+   var lastName = console.log("What is his last Name?");
+   console.log(firstName + " " + lastName); //Gazibur //
+   
+   /*****************************
+    * Basic operators
+    */
+   
+   var year, yearGazibur, yearJunaid;
+   now = 2018;
+   ageGazibur = 28;
+   ageJunaid = 33;
+   
+   // Math operators
+   yearGazibur = now - ageGazibur;
+   yeahJunaid = now - ageJunaid;
+   
+   console.log(yearGazibur); //1990//
+   
+   console.log(now + 2); //2020//
+   console.log(now * 2); ////4036
+   console.log(now / 10); //201.8
+   
+   // Logical operators
+   var GaziburOlder = ageGazibur < ageJunaid;
+   console.log(GaziburOlder); //true
+   
+   // typeof operator
+   console.log(typeof GaziburOlder); //boolean
+   console.log(typeof ageGazibur); //number
+   console.log(typeof "Junaid is older tha Gazibur"); //string
+   var x;
+   console.log(typeof x); //undefined
+   
+   //
+   /*****************************
+    * Operator precedence
+    */
+   
+   var now = 2018;
+   var yearGazibur = 1989;
+   var fullAge = 18;
+   
+   // Multiple operators
+   var isFullAge = now - yearGazibur >= fullAge; // true
+   console.log(isFullAge); //true
+   
+   // Grouping
+   var ageGazibur = now - yearGazibur;
+   var ageJunaid = 35;
+   var average = (ageGazibur + ageJunaid) / 2;
+   console.log(average); //32
+   
+   // Multiple assignments
+   var x, y;
+   x = y = (3 + 5) * 4 - 6; // 8 * 4 - 6 // 32 - 6 // 26
+   console.log(x, y); //26 26
+   
+   // More operators
+   x *= 2;
+   console.log(x); //52
+   x += 10;
+   console.log(x); //62
+   x--;
+   console.log(x); //61
+   
+   //
+   
+   /************        *****************
+    * If / else statements
+    */
+   
+   var firstName = "Gazibur";
+   var civilStatus = "single";
+   
+   if (civilStatus === "married") {
+    console.log(firstName + " is married!"); //
+   } else {
+    console.log(firstName + " will hopefully marry soon :)"); ////Gazibur will hopefully marry soon :)
+   }
+   
+   var isMarried = true;
+   if (isMarried) {
+    console.log(firstName + " is married!"); //Gazibur is married!
+   } else {
+    console.log(firstName + " will hopefully marry soon :)"); //
+   }
+   
+   var massJunaid = 78; // kg
+   var heightJunaid = 1.69; // meters
+   
+   var massGazibur = 92;
+   var heightGazibur = 1.95;
+   
+   var BMIJunaid = massJunaid / (heightJunaid * heightJunaid);
+   var BMIGazibur = massGazibur / (heightGazibur * heightGazibur);
+   
+   if (BMIJunaid > BMIGazibur) {
+    console.log("Junaid's BMI is higher than Gazibur's."); //Junaid's BMI is higher than Gazibur's.
+   } else {
+    console.log("Gazibur's BMI is higher than Junaids's."); //
+   }
+   
+   //
+   // Coding challange-1
+   /* Gazibur and mike play basketball in different teams.In the latest 3 games ,gazibur's team scored 89  120  103 points.
+   
+   
+   1)Calculate the average score of each team ?
+   2)Decide which teams wins in the average (highest average scores), and print the winner to the console. Also include average score in the output .
+   3)Then change the score to show different winners. Don't forget to take into account might be a draw (the same as the average score)
+   4) EXTRA:- Azizul also play basketball, and her team scored 97 134 and 105 points . Like before  log the average winner to the console. Hint:-you will need && operator to take the decition. If you can't solve this problem  just watch the solution, it's no problem :)
+                                 GOOD LUCK Mr Gazibur!
+   */
+   var scoreGazibur = (110 + 120 + 103) / 3;
+   var scoreJunaid = (116 + 114 + 123) / 3;
+   var scoreAzizul = (97 + 134 + 105) / 3;
+   console.log(scoreGazibur, scoreJunaid, scoreAzizul);
+   if (scoreGazibur > scoreJunaid && scoreGazibur > scoreAzizul) {
+    console.log("Gazibur/s team wins with " + scoreGazibur + ' points.')
+   } else if (scoreJunaid > scoreGazibur && scoreJunaid > scoreAzizul) {
+    console.log('Junaid/s team wins with ' + scoreJunaid + 'points.')
+   } else if (scoreAzizul > scoreGazibur && scoreAzizul > scoreJunaid) {
+    console.log('Azizul/s team wins with ' + scoreAzizul + 'points.')
+   } else {
+    console.log('There is draw')
+   }
+   /* if (scoreGazibur > scoreJunaid) {
+       console.log("Gazibur/s team wins with " + scoreGazibur + ' points.')
+   } else if (scoreJunaid > scoreGazibur) {
+       console.log('Junaid/s team wins with ' + scoreJunaid + 'points.')
+   } else {
+       console.log('There is draw')
+   } */
+   /*****************************
+    * Boolean logic
+    */
+   
+   var firstName = "Gazibur";
+   var age = 20;
+   
+   if (age < 13) {
+    console.log(firstName + " is a boy."); //
+   } else if (age >= 13 && age < 20) {
+    console.log(firstName + " is a teenager."); //
+   } else if (age >= 20 && age < 30) {
+    console.log(firstName + " is a young man."); //Gazibur is a young man.
+   } else {
+    console.log(firstName + " is a man."); //
+   }
+   //
+   /*****************************
+    * The Ternary Operator and Switch Statements
+    */
+   
+   var firstName = "Gazibur";
+   var age = 14;
+   // Ternary operator
+   age >= 18 ?
+    console.log(firstName + " drinks beer.") :
+    console.log(firstName + " drinks juice."); //Gazibur drinks juice.
+   
+   var drink = age >= 18 ? "beer" : "juice";
+   console.log(drink); //juice
+   
+   if (age >= 18) {
+    var drink = "beer";
+   } else {
+    var drink = "juice";
+   }
+   
+   // Switch statement
+   var job = "instructor";
+   switch (job) {
+    case "teacher":
+    case "instructor":
+     console.log(firstName + " teaches kids how to code."); //Gazibur teaches kids how to code.
+     break;
+    case "driver":
+     console.log(firstName + " drives an uber in assam."); //
+     break;
+    case "designer":
+     console.log(firstName + " designs beautiful websites."); //
+     break;
+    default:
+     console.log(firstName + " does something else."); //
+   }
+   
+   age = 56;
+   switch (true) {
+    case age < 13:
+     console.log(firstName + " is a boy."); //
+     break;
+    case age >= 13 && age < 20:
+     console.log(firstName + " is a teenager."); //
+     break;
+    case age >= 20 && age < 30:
+     console.log(firstName + " is a young man."); //
+     break;
+    default:
+     console.log(firstName + " is a man."); //Gazibur is a man.
+   }
+   
+   //
+   
+   /*****************************
+    * Truthy and Falsy values and equality operators
+    */
+   
+   // falsy values: undefined, null, 0, '', NaN
+   // truthy values: NOT falsy values
+   
+   var height;
+   
+   height = 23;
+   
+   if (height || height === 0) {
+    console.log("Variable is defined"); //Variable is defined
+   } else {
+    console.log("Variable has NOT been defined"); //
+   }
+   
+   // Equality operators
+   if (height === "23") {
+    console.log("The == operator does type coercion!"); //
+   }
+   
+   //
+   /*****************************
+    * Functions
+    */
+   
+   function calculateAge(birthYear) {
+    return 2018 - birthYear;
+   }
+   
+   var ageGazibur = calculateAge(1990);
+   var ageMike = calculateAge(1948);
+   var ageazizul = calculateAge(1969);
+   console.log(ageGazibur, ageMike, ageazizul); //26 68 47
+   
+   function yearsUntilRetirement(year, firstName) {
+    var age = calculateAge(year);
+    var retirement = 65 - age;
+   
+    if (retirement > 0) {
+     console.log(firstName + " retires in " + retirement + " years."); //Gazibur retires in 39 years.
+    } else {
+     console.log(firstName + " is already retired."); //Mike is already retired.
+    }
+   }
+   
+   yearsUntilRetirement(1990, "Gazibur"); //  Gazibur retires in 39 years.
+   yearsUntilRetirement(1948, "Mike"); // Mike is already retired.
+   yearsUntilRetirement(1969, "azizul"); // azizul retires in 18 years. //
+   
+   /*****************************
+    * Function Statements and Expressions
+    */
+   
+   // Function declaration
+   // function whatDoYouDo(job, firstName) {}
+   
+   // Function expression
+   var whatDoYouDo = function(job, firstName) {
+    switch (job) {
+     case "teacher":
+      return firstName + " teaches kids how to code";
+     case "driver":
+      return firstName + " drives a cab in assam.";
+     case "designer":
+      return firstName + " designs beautiful websites";
+     default:
+      return firstName + " does something else";
+    }
+   };
+   
+   console.log(whatDoYouDo("teacher", "Gazibur")); //Gazibur teaches kids how to code
+   console.log(whatDoYouDo("designer", "azizul")); //azizul designs beautiful websites
+   console.log(whatDoYouDo("retired", "Junaid")); //Junaid does something else //
+   
+   /*****************************
+    * Arrays
+    */
+   
+   // Initialize new array
+   var names = ["Gazibur", "Junaid", "azizul"];
+   var years = new Array(1990, 1969, 1948);
+   
+   console.log(names[2]); //azizul
+   console.log(names.length); //3
+   
+   // Mutate array data
+   names[1] = "Ben";
+   names[names.length] = "Mary";
+   console.log(names); //Array(4)0: "Gazibur"1: "Ben"2: "azizul"3: "Mary"length: 4__proto__: Array(0)
+   
+   // Different data types
+   var Gazibur = ["Gazibur", "Rahman", 1990, "designer", false];
+   
+   Gazibur.push("yellow");
+   Gazibur.unshift("Mr.");
+   console.log(Gazibur); //Array(4)0: "Gazibur"1: "Rahman"2: 19903: "designer"length: 4__proto__: Array(0)
+   
+   Gazibur.pop();
+   Gazibur.pop();
+   Gazibur.shift();
+   console.log(Gazibur); //Array(4)0: "Gazibur"1: "Rahman"2: 19903: "designer"length: 4__proto__: Array(0)
+   
+   console.log(Gazibur.indexOf(23)); //-1
+   
+   var isDesigner =
+    Gazibur.indexOf("designer") === -1 ?
+    "Gazibur is NOT a designer" :
+    "Gazibur IS a designer";
+   console.log(isDesigner); //Gazibur IS a designer
+   
+   //function example:------
+   // CODING CHALLANGE 2  GOOD LUCK Mr Gazibur!
+   /* Gazibur and his family went on a holiday went to three different restauants. The bills were $124,$48,and $168.
+   
+   To tip waiter a fair amount, Gazibur created a tip calculator ( as a function) . He likes to tip 20% of the bill is between $50,and 15% when the bill is below 50$ and $200, and 10% if the bill is more than 200$
+   
+   
+   In the end would like to have 2 arrays:
+   1)Containing all three tips (one for each bill)
+   2)Containing all three final paid amounts(bill + tip)
+   (NOTE:-To calculate 20% of a value, simply multiply if with 20/100 = .2)
+                             GOOD LUCK Mr Gazibur!
+   */
+   let bill = [124, 48, 168]
+   let tipCalculator = function(bill) {
+    if (bill > 50) {
+     percentage = .15
+    } else if (bill <= 50 && bill >= 200) {
+     percentage = .2
+    } else if (bill > 200) {
+     percentage = .1
+    }
+    return bill * percentage
+   }
+   // In the example below multiple called-function in an array, Gazibur rahman!!
+   var tip = [tipCalculator(bill[0]), tipCalculator(bill[1]), tipCalculator(bill[2])]
+   console.log(tip)
+   let TotalfinalValue = [tip[0] + bill[0], tip[1] + bill[1], tip[2] + bill[2]] /* Index of (tip) array in a new array */
+   console.log(TotalfinalValue);
+   
+   /* SOME  POPULAR USEFULL ARRAY METHODS :--- */
+   var arr = ["a", "b", "c", "d"];
+   
+   // push()
+   
+   arr.push("e");
+   console.log(arr); //(5) ["a", "b", "c", "d", "e"]
+   var arr2 = ["g", "q"];
+   
+   // concat()
+   
+   var arr3 = arr.concat(arr2);
+   console.log(arr3); //(7) ["a", "b", "c", "d", "e", "g", "q"]
+   console.log(arr); //
+   //(5) ["a", "b", "c", "d", "e"]
+   
+   // join()
+   
+   var arr4 = arr.join("!");
+   console.log(arr4); //a!b!c!d!e
+   console.log(arr); //(5) ["a", "b", "c", "d", "e"]
+   
+   // reverse()
+   
+   arr.reverse();
+   console.log(arr); //(5) ["e", "d", "c", "b", "a"]
+   
+   // shift()
+   
+   var arr5 = arr.shift();
+   console.log(arr5); //e
+   console.log(arr); //(4) ["d", "c", "b", "a"]
+   
+   // unshift()
+   
+   var arr6 = arr.unshift("p");
+   console.log(arr6); //5
+   console.log(arr);
+   //(5) ["p","d", "c", "b", "a"]
+   
+   // slice()
+   
+   var arr7 = arr.splice(2, 2, "js Gazibur");
+   console.log(arr7); //["c", "b",]
+   console.log(arr); ////(4) ["p","d", "js gazibur","a"]
+   
+   // JS Nuggets
+   
+   // Array iteration: 8 methods
+   
+   const Arrray = [1, 2, 3, -9, -41, -21, 0.3, 4];
+   Arrray.forEach(function(item, index) {
+    console.log(item, index); //1 0
+   
+    /* 1 0
+      2 1
+      3 2 
+      -9 3
+      -41 4
+      -21 5
+      0.3 6
+       4 7
+      */
+   });
+   console.log(Arrray); //(8) [1, 2, 3, -9, -41, -21, 0.3, 4]
+   
+   // map
+   
+   const doubled = Arrray.map(function(item) {
+    return item * 2;
+   });
+   console.log(doubled);
+   8; // [2, 4, 6, -18, -82, -42, 0.6, 8]
+   
+   // filter
+   
+   const evens = Arrray.filter(function(item) {
+    return item % 2 === 0;
+   });
+   console.log(evens); //(2) [2, 4]
+   
+   // reduce
+   
+   const sum = Arrray.reduce(function(result, item) {
+    return result + item;
+   }, 0);
+   console.log(sum); //-60.7
+   
+   // some
+   const hasNegativeNumbers = Arrray.some(function(item) {
+    return item < 0;
+   });
+   console.log(hasNegativeNumbers); //true
+   
+   // every
+   const allPositiveNumbers = Arrray.every(function(item) {
+    return item > 0;
+   });
+   console.log(allPositiveNumbers); //false
+   
+   // find
+   const objects = [{ id: "a" }, { id: "b" }, { id: "c" }];
+   const found = objects.find(function(item) {
+    return item.id === "b";
+   });
+   console.log(found); //{id: "b"}
+   
+   // find index
+   const objects2 = [{ id: "a" }, { id: "b" }, { id: "c" }];
+   const foundIndex = objects2.findIndex(function(item) {
+    return item.id === "b";
+   });
+   console.log(foundIndex); //1
+   
+   //  common string methods
+   var stringOne = "free code camp is the best place to learn";
+   var stringTwo = "front end and back development";
+   // 1. charAt();
+   console.log(stringOne.charAt(1)); //r
+   // charCodeAt
+   console.log(stringOne.charCodeAt(1)); //114
+   // concat
+   console.log(stringOne.concat(stringTwo)); //free code camp is the best place to learnfront end and back development"
+   // startsWith()
+   console.log(stringOne.startsWith("free")); //true
+   // endsWith
+   console.log(stringOne.endsWith("learn")); //true
+   // fromCharCode
+   console.log(String.fromCharCode(114)); //r
+   // includes
+   console.log(stringTwo.includes("end")); //true
+   // lastIndexOf
+   console.log(stringTwo.lastIndexOf("end")); //6
+   // match()
+   console.log(stringTwo.match(/end/g)); //["end"]
+   // repeat()
+   console.log(stringOne.repeat(3)); //free code camp is the best place to learnfree code camp is the best place to learnfree code camp is the best place to learn
+   // replace()
+   console.log(stringTwo.replace(/end/g, "end")); //front end and back development
+   // search()
+   console.log(stringTwo.search("end")); //6
+   // slice()
+   console.log(stringTwo.slice(2, 4)); //on
+   // split()
+   
+   console.log(stringOne.split(" ")); // ["free", "code", "camp", "is", "the", "best", "place", "to", "learn"]
+   // substr()
+   console.log(stringTwo.substr(2, 4)); //ont
+   // substring()
+   console.log(stringTwo.substring(2, 4)); //on
+   // toLowerCase()
+   console.log(stringTwo.toLowerCase()); //front end and back development
+   // toUpperCase()
+   console.log(stringTwo.toUpperCase()); //FRONT END AND BACK END DEVELOPMENT
+   // trim()
+   var stringThree = "Subscribe now!";
+   console.log(stringThree.trim()); //Subscribe now!
+   
+   // Object literal
+   var Gazibur = {
+    firstName: "Gazibur",
+    lastName: "Rahman",
+    birthYear: 1990,
+    family: ["azizul", "Junaid", "Bob", "halima"],
+    job: "teacher",
+    isMarried: false,
+   };
+   
+   console.log(Gazibur.firstName); //Gazibur
+   console.log(Gazibur["lastName"]); //Rahman
+   var x = "birthYear";
+   console.log(Gazibur[x]); //1990
+   
+   Gazibur.job = "designer";
+   Gazibur["isMarried"] = true;
+   console.log(
+    Gazibur
+   );
+   /* Object
+      firstName: "Gazibur"
+      lastName: "Rahman"
+      birthYear: 1990
+      family: (4) ["azizul", "Junaid", "Bob", "halima"]
+      job: "designer"
+      isMarried: true
+      __proto__: Object */
+   
+   // new Object syntax
+   var azizul = new Object();
+   azizul.firstName = "azizul";
+   azizul.birthYear = 1969;
+   azizul["lastName"] = "Rahman";
+   console.log(azizul); //{firstName: "azizul", birthYear: 1969, lastName: "Rahman"} //
+   
+   /*****************************
+    * Objects and methods
+    */
+   
+   var Gazibur = {
+    firstName: "Gazibur",
+    lastName: "Rahman",
+    birthYear: 1992,
+    family: ["azizul", "Junaid", "Bob", "halima"],
+    job: "teacher",
+    isMarried: false,
+    calcAge: function() {
+     this.age = 2018 - this.birthYear;
+    },
+   };
+   
+   Gazibur.calcAge();
+   console.log(Gazibur); //{firstName: "Gazibur", lastName: "Rahman", birthYear: 1992, family: Array(4), job: "teacher", …}firstName: "Gazibur"lastName: "Rahman"birthYear: 1992family: (4) ["azizul", "Junaid", "Bob", "halima"]job: "teacher"isMarried: falsecalcAge: ƒ ()age: 26__proto__: Object
+   
+   /*****************************
+    * Loops and iteration
+    */
+   
+   // for loop
+   for (var i = 1; i <= 10; i += 2) {
+    console.log(i); //1 to 19
+   }
+   
+   // i = 0, 0 < 10 true, log i to console, i++//
+   // i = 1, 1 < 10 true, log i to the console, i++//
+   //...
+   // i = 9, 9 < 10 true, log i to the console, i++//
+   // i = 10, 10 < 10 FALSE, exit the loop!
+   
+   var Gazibur = ["Gazibur", "Rahman", 1990, "designer", false, "yellow"];
+   for (var i = 0; i < Gazibur.length; i++) {
+    console.log(Gazibur[i]); //Gazibur Rahman 1990 designer false yellow
+   }
+   
+   // While loop
+   var i = 0;
+   while (i < Gazibur.length) {
+    console.log(Gazibur[i]); //'Gazibur Rahman 1990 designer false yellow
+    i++;
+   }
+   //
+   
+   // continue and break statements
+   var Gazibur = ["Gazibur", "Rahman", 1990, "designer", false, "yellow"];
+   
+   for (var i = 0; i < Gazibur.length; i++) {
+    if (typeof Gazibur[i] !== "string") continue;
+    console.log(Gazibur[i]); //Gazibur Rahman  designer   yellow
+   }
+   
+   for (var i = 0; i < Gazibur.length; i++) {
+    if (typeof Gazibur[i] !== "string") break;
+    console.log(Gazibur[i]); //Gazibur Rahman
+   } //
+   // Looping backwards
+   for (var i = Gazibur.length - 1; i >= 0; i--) {
+    console.log(Gazibur[i]); // yellow false designer 1990 Rahman Gazibur
+   }
+   
+   // Object literal
+   var Gazibur = {
+    firstName: "Gazibur",
+    lastName: "Rahman",
+    birthYear: 1990,
+    family: ["azizul", "Junaid", "Bob", "halima"],
+    job: "teacher",
+    isMarried: false,
+   };
+   
+   console.log(Gazibur.firstName); //Gazibur
+   console.log(Gazibur["lastName"]); //Rahman
+   var x = "birthYear";
+   console.log(Gazibur[x]); //1990
+   
+   Gazibur.job = "designer";
+   Gazibur["isMarried"] = true;
+   console.log(
+    Gazibur
+   );
+   /* Object
+      firstName: "Gazibur"
+      lastName: "Rahman"
+      birthYear: 1990
+      family: (4) ["azizul", "Junaid", "Bob", "halima"]
+      job: "designer"
+      isMarried: true
+      __proto__: Object */
+   
+   // new Object syntax
+   var azizul = new Object();
+   azizul.firstName = "azizul";
+   azizul.birthYear = 1969;
+   azizul["lastName"] = "Rahman";
+   console.log(azizul); //{firstName: "azizul", birthYear: 1969, lastName: "Rahman"} //
+   
+   /*****************************
+    * Objects and methods
+    */
+   
+   var Gazibur = {
+    firstName: "Gazibur",
+    lastName: "Rahman",
+    birthYear: 1992,
+    family: ["azizul", "Junaid", "Bob", "halima"],
+    job: "teacher",
+    isMarried: false,
+    calcAge: function() {
+     this.age = 2018 - this.birthYear;
+    },
+   };
+   
+   Gazibur.calcAge();
+   console.log(Gazibur); //{firstName: "Gazibur", lastName: "Rahman", birthYear: 1992, family: Array(4), job: "teacher", …}firstName: "Gazibur"lastName: "Rahman"birthYear: 1992family: (4) ["azizul", "Junaid", "Bob", "halima"]job: "teacher"isMarried: falsecalcAge: ƒ ()age: 26__proto__: Object
+   
+   
+   /* let's remember the first coding challange(basics/challange-1.js) where Mark and Gazibur compare their BMI's.let's now implement the same functionallity with object and methods,
+   
+   1)For each of them create  an object with properties for their full name , Mass, and height
+   2)Then add a object to calculate the BMI. Save the BMI to the object and also return it from the method.
+   3) In the end log to console who has the higher BMI together with the name and respectibe BMI's. Don't forget they might have the same BMI.
+   Remember:- BMI = Mass/height*height 
+   
+                                 GOOD LUCK Mr Gazibur!*/
+   var Gazibur = {
+    fullName: 'Gazibur Rahman',
+    Mass: 92,
+    height: 1.95,
+    calcBMI: function() {
+     this.BMI = this.Mass / (this.height * this.height)
+     return this.BMI
+    },
+    language: 'english'
+   }
+   
+   var Junaid = {
+    fullName: 'Junaid',
+    Mass: 78,
+    height: 1.69,
+    calcBMI: function() {
+     this.BMI = this.Mass / (this.height * this.height);
+     return this.BMI
+    },
+    language: 'english'
+   }
+   console.log(Junaid.calcBMI())
+   console.log(Gazibur.calcBMI(), Junaid.calcBMI());
+   console.log(Gazibur.BMI, Junaid.BMI);
+   Junaid.calcBMI();
+   console.log(Gazibur, Junaid);
+   if (Gazibur.calcBMI() > Junaid.calcBMI()) {
+    console.log(Gazibur.fullName + 'has a higher BMI of' + Junaid.BMI)
+   } else if (Junaid.calcBMI > Gazibur.calcBMI) {
+    console.log(Junaid.fullName + ' has a higher BMI of ' + Junaid.BMI)
+   } else {
+    console.log('They have same BMI')
+   }
+   
+   /////////////////////////////
+   // Lecture: Function constructor
+   
+   var Person = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+   };
+   
+   Person.prototype.calculateAge = function() {
+    console.log(2016 - this.yearOfBirth); //26 47 68
+   };
+   
+   Person.prototype.scientificName = "homo sapiens";
+   
+   var Gazibur = new Person("Gazibur", 1990, "teacher");
+   var azizul = new Person("azizul", 1969, "designer");
+   var Junaid = new Person("Junaid", 1948, "retired");
+   
+   Gazibur.calculateAge(); //26
+   azizul.calculateAge(); //47
+   Junaid.calculateAge(); //68
+   
+   console.log(Gazibur.scientificName); //homosapiens
+   console.log(azizul.scientificName); //homosapiens
+   console.log(Junaid.scientificName); //homosapiens //
+   
+   /////////////////////////////
+   // Lecture: Object.create
+   
+   var personProto = {
+    calculateAge: function() {
+     console.log(2016 - this.yearOfBirth); //26
+    },
+   };
+   
+   var Gazibur = Object.create(personProto);
+   Gazibur.name = "Gazibur";
+   Gazibur.yearOfBirth = 1990;
+   Gazibur.job = "teacher";
+   Gazibur.calculateAge(); //26
+   
+   var azizul = Object.create(personProto, {
+    name: { value: "azizul" },
+    yearOfBirth: { value: 1969 },
+    job: { value: "designer" },
+   }); //
+   /////////////////////////////
+   
+   // Lecture: Primitives vs objects
+   var a = 23;
+   var b = a;
+   a = 46;
+   console.log(a); //46
+   console.log(b); //23
+   // Objects
+   var obj3 = {
+    name: "Gazibur",
+    age: 26,
+   };
+   var obj2 = obj3;
+   obj3.age = 30;
+   console.log(obj3.age); //30
+   console.log(obj2.age); //30
+   // Functions
+   var age = 27;
+   var obj3 = {
+    name: "hifjur",
+    city: "Guwahati",
+   };
+   
+   function change(a, b) {
+    a = 30;
+    b.city = "Guwahati";
+   }
+   
+   change(age, obj3);
+   
+   console.log(age); //27
+   console.log(obj3.city); //Guwahati
+   ////////passing functions as argument
+   
+   var Gazibur = {
+    family: [
+     "Mofiz uddin",
+     "Johura maya",
+     "jayeda",
+     "Asmina",
+     "Halima",
+     "Jiabur",
+     "Motibur",
+     "Hifjur",
+     "Azizul",
+     "Gazibur ",
+   ],
+    familyBirthYear: [1959, 1967, 1982, 1985, 1987, 1986, 1990, 1992, 1995, 1999],
+    familyAges: [], //This array is filled by callback function(function as an arguement) below  by Gazibur .
+    pensiontime: [], //This array is filled by callback function(function as an arguement) below  by Gazibur .
+    isMarried: [], //This array is filled by callback function(function as an arguement) below  by Gazibur .
+    Job: "student",
+   };
+   // call back functions
+   
+   function AgeCalc(arr, fn) {
+    let ages = Gazibur.familyAges;
+    for (var i = 0; i < arr.length; i++) {
+     //looping over an array(arr)
+     ages.push(fn(arr[i]));
+    }
+    return ages;
+   }
+   
+   function familyage(el) {
+    var age = 2020 - el;
+    return age;
+   }
+   var bornyear = Gazibur.familyBirthYear;
+   AgeCalc(bornyear, familyage);
+   
+   function pensionyear(arr, fn) {
+    var pensionAge = Gazibur.pensiontime;
+    for (var i = 0; i < arr.length; i++) {
+     //looping
+     pensionAge.push(fn(arr[i]));
+    }
+    return pensionAge;
+   }
+   
+   function pension(index) {
+    var cal = 60 - index;
+    return cal;
+   }
+   var isMarried = Gazibur.isMarried;
+   
+   function Married(arr, fn) {
+    for (var i = 0; i < ages.length; i++) {
+     isMarried.push(fn(arr[i]));
+    }
+   }
+   
+   function name(el) {
+    if (el >= 25) {
+     return true;
+    } else {
+     return false;
+    }
+   }
+   var ages = Gazibur.familyAges;
+   pensionyear(ages, pension);
+   Married(ages, name);
+   console.log(Gazibur.isMarried); //(10) [true, true, true, true, true, true, true, true, true, false]
+   console.log(Gazibur.pensiontime); //(10) [-1, 7, 22, 25, 27, 26, 30, 32, 35, 39]
+   console.log(ages); //(10) [61, 53, 38, 35, 33, 34, 30, 28, 25, 21]
+   console.log(
+    Gazibur
+   );
+   /* {family: Array(10), familyBirthYear: Array(10), familyAges: Array(10), pensiontime: Array(10), isMarried: Array(10), …}
+      Job: "student"
+      family: (10) ["Mofiz uddin", "Johura maya", "jayeda", "Asmina", "Halima", "Jiabur", "Motibur", "Hifjur", "Azizul", "Gazibur "]
+      familyAges: (10) [61, 53, 38, 35, 33, 34, 30, 28, 25, 21]
+      familyBirthYear: (10) [1959, 1967, 1982, 1985, 1987, 1986, 1990, 1992, 1995, 1999]
+      isMarried: (10) [true, true, true, true, true, true, true, true, true, false]
+      pensiontime: (10) [-1, 7, 22, 25, 27, 26, 30, 32, 35, 39]
+      __proto__: Object */ //
+   // Lecture: The this keyword
+   //console.log(this);
+   
+   calculateAge(1985);
+   
+   function calculateAge(year) {
+    console.log(2016 - year);
+    console.log(this);
+   }
+   
+   var Gazibur = {
+    name: "Gazibur",
+    yearOfBirth: 1990,
+    calculateAge: function() {
+     console.log(this); //{name: "Gazibur", yearOfBirth: 1990, calculateAge: ƒ}
+     console.log(2016 - this.yearOfBirth); //26
+   
+     function innerFunction() {
+      console.log(this); //Window {parent: Window, opener: null, top: Window, length: 0, frames: Window,...
+     }
+     innerFunction();
+    },
+   };
+   
+   2016 - this.yearOfBirth; //26
+   
+   var mike = {
+    name: "Mike",
+    yearOfBirth: 1984,
+   };
+   
+   mike.calculateAge = Gazibur.calculateAge;
+   mike.calculateAge(); ////32
+   
+   /////////////////////////////
+   // Lecture: Functions returning functions
+   
+   function interviewQuestion(job) {
+    return function(name) {
+     if (job === "designer") {
+      console.log(
+       name + ", can you please explain what UX design is?"
+      );
+      /* What subject do you teach, Gazibur? ,
+                     Gazibur, can you please explain what UX design is? ,
+                     azizul, can you please explain what UX design is? ,
+                     Junaid, can you please explain what UX design is? ,
+                     */
+     } else if (job === "teacher") {
+      console.log(
+       "What subject do you teach, " + name + "?"
+      ); /* //What subject do you teach, Junaid?,          What subject do you teach, Junaid? */
+     } else {
+      console.log("Hello " + name + ", what do you do?"); //
+     }
+    };
+   }
+   
+   interviewQuestion("teacher")("Gazibur");
+   var teacherQuestion = interviewQuestion("teacher");
+   var designerQuestion = interviewQuestion("designer");
+   
+   teacherQuestion("Gazibur");
+   designerQuestion("Gazibur");
+   designerQuestion("azizul");
+   designerQuestion("Junaid");
+   designerQuestion("Mike");
+   interviewQuestion("teacher")("Gazibur");
+   interviewQuestion("teacher")("Junaid"); //
+   
+   /////////////////////////////
+   // Lecture: IIFE
+   
+   function game() {
+    var score = Math.random() * 10;
+    console.log(score >= 5); //false
+   }
+   game();
+   
+   (function() {
+    var score = Math.random() * 10;
+    console.log(score >= 5); //false
+   })();
+   
+   //console.log(score);//error
+   
+   (function(goodLuck) {
+    var score = Math.random() * 10;
+    console.log(score >= 5 - goodLuck); //true
+   })(5); //
+   
+   //console.log(this);
+   
+   /////////////////////////////
+   // Lecture: Closures
+   
+   function retirement(retirementAge) {
+    var a = " years left until retirement.";
+    return function(yearOfBirth) {
+     var age = 2016 - yearOfBirth;
+     console.log(retirementAge - age + a); //
+     /* 39 years left until retirement.
+             40 years left until retirement. 
+             41 years left until retirement. */
+    };
+   }
+   
+   var retirementUS = retirement(66);
+   var retirementGermany = retirement(65);
+   var retirementIceland = retirement(67);
+   
+   retirementGermany(1990);
+   retirementUS(1990);
+   retirementIceland(1990); //
+   
+   //retirement(66)(1990);
+   
+   
+   
+   /*
+   /////////////////////////////
+   // CODING CHALLENGE
+   
+   
+   /*
+   --- Let's build a fun quiz game in the console! ---
+   
+   1. Build a function constructor called Question to describe a question. A question should include:
+   a) question itself
+   b) the answers from which the player can choose the correct one (choose an adequate data structure here, array, object, etc.)
+   c) correct answer (I would use a number for this)
+   
+   2. Create a couple of questions using the constructor
+   
+   3. Store them all inside an array
+   
+   4. Select one random question and log it on the console, together with the possible answers (each question should have a number) (Hint: write a method for the Question objects for this task).
+   
+   5. Use the 'prompt' function to ask the user for the correct answer. The user should input the number of the correct answer such as you displayed it on Task 4.
+   
+   6. Check if the answer is correct and print to the console whether the answer is correct ot nor (Hint: write another method for this).
+   
+   7. Suppose this code would be a plugin for other programmers to use in their code. So make sure that all your code is private and doesn't interfere with the other programmers code (Hint: we learned a special technique to do exactly that).
+   */
+   
+   
+   
+   
+   
+   
+   /*
+     
+     (function () {
+       function Question(question, answers, correct) {
+           this.question = question;
+           this.answers = answers;
+           this.correct = correct;
+       }
+   
+       Question.prototype.displayQuestion = function () {
+           console.log(this.question);
+   
+           for (var i = 0; i < this.answers.length; i++) {
+               console.log(i + ': ' + this.answers[i]);
+           }
+       }
+   
+       Question.prototype.checkAnswer = function (ans) {
+           if (ans === this.correct) {
+               console.log('Correct answer!');
+   
+           } else {
+               console.log('Wrong answer. Try again :)')
+           }
+       }
+   
+       var q1 = new Question('Is JavaScript the coolest programming language in the world?',
+           ['Yes', 'No'],
+           0);
+   
+       var q2 = new Question('What is the name of this course\'s teacher?',
+           ['Gazibur', 'nargis', 'hifjur'],
+           2);
+   
+       var q3 = new Question('What does best describe coding?',
+           ['Boring', 'Hard', 'Fun', 'Tediuos'],
+           2);
+   
+       var questions = [q1, q2, q3];
+   
+       var n = Math.floor(Math.random() * questions.length);
+   
+       questions[n].displayQuestion();
+   
+      // var answer = parseInt(('Please select the correct answer.'));
+   
+       questions[n].checkAnswer(answer);
+   })();
+   
+   
+   
+   
+   
+   
+   
+   /*
+   --- Expert level ---
+   
+   8. After you display the result, display the next random question, so that the game never ends (Hint: write a function for this and call it right after displaying the result)
+   
+   9. Be careful: after Task 8, the game literally never ends. So include the option to quit the game if the user writes 'exit' instead of the answer. In this case, DON'T call the function from task 8.
+   
+   10. Track the user's score to make the game more fun! So each time an answer is correct, add 1 point to the score (Hint: I'm going to use the power of closures for this, but you don't have to, just do this with the tools you feel more comfortable at this point).
+   
+   11. Display the score in the console. Use yet another method for this.
+   
+   
+   (function () {
+       function Question(question, answers, correct) {
+           this.question = question;
+           this.answers = answers;
+           this.correct = correct;
+       }
+   
+       Question.prototype.displayQuestion = function () {
+           console.log(this.question);
+   
+           for (var i = 0; i < this.answers.length; i++) {
+               console.log(i + ': ' + this.answers[i]);
+           }
+       }
+   
+       Question.prototype.checkAnswer = function (ans, callback) {
+           var sc;
+   
+           if (ans === this.correct) {
+               console.log('Correct answer!');
+               sc = callback(true);
+           } else {
+               console.log('Wrong answer. Try again :)');
+               sc = callback(false);
+           }
+   
+           this.displayScore(sc);
+       }
+   
+       Question.prototype.displayScore = function (score) {
+           console.log('Your current score is: ' + score);
+           console.log('------------------------------');
+       }
+   
+   
+       var q1 = new Question('Is JavaScript the coolest programming language in the world?',
+           ['Yes', 'No'],
+           0);
+   
+       var q2 = new Question('What is the name of this course\'s teacher?',
+           ['Gazibur', 'nargis', 'hifjur'],
+           2);
+   
+       var q3 = new Question('What does best describe coding?',
+           ['Boring', 'Hard', 'Fun', 'Tediuos'],
+           2);
+   
+       var questions = [q1, q2, q3];
+   
+       function score() {
+           var sc = 0;
+           return function (correct) {
+               if (correct) {
+                   sc++;
+               }
+               return sc;
+           }
+       }
+       var keepScore = score();
+   
+   
+       function nextQuestion() {
+   
+           var n = Math.floor(Math.random() * questions.length);
+           questions[n].displayQuestion();
+   
+           //var answer = prompt('Please select the correct answer.');
+   
+           if (answer !== 'exit') {
+               questions[n].checkAnswer(parseInt(answer), keepScore);
+   
+               nextQuestion();
+           }
+       }
+   
+       nextQuestion();
+   
+   })();
+      */
+   
+   
+   /////////////////////////////
+   // Lecture: Bind, call and apply
+   
+   var Gazibur = {
+    name: "Gazibur",
+    age: 26,
+    job: "teacher",
+    presentation: function(style, timeOfDay) {
+     if (style === "formal") {
+      console.log(
+       "Good " +
+       timeOfDay +
+       ", Ladies and gentlemen! I'm " +
+       this.name +
+       ", I'm a " +
+       this.job +
+       " and I'm " +
+       this.age +
+       " years old."
+      );
+      /* //Good morning, Ladies and gentlemen! I'm Gazibur, I'm a teacher and I'm 26 years old.
+                     Good afternoon, Ladies and gentlemen! I'm halima, I'm a designer and I'm 35 years old. */
+      /* Good afternoon, Ladies and gentlemen! I'm halima, I'm a designer and I'm 35 years old. */
+     } else if (style === "friendly") {
+      console.log(
+       "Hey! What's up? I'm " +
+       this.name +
+       ", I'm a " +
+       this.job +
+       " and I'm " +
+       this.age +
+       " years old. Have a nice " +
+       timeOfDay +
+       "."
+      );
+      /* 
+                     Hey! What's up? I'm halima, I'm a designer and I'm 35 years old. Have a nice afternoon. //Hey! What's up? I'm Gazibur, I'm a teacher and I'm 26 years old. Have a nice night.
+                     Hey! What's up? I'm Gazibur, I'm a teacher and I'm 26 years old. Have a nice morning. */
+     }
+    },
+   };
+   var halima = {
+    name: "halima",
+    age: 35,
+    job: "designer",
+   };
+   
+   Gazibur.presentation("formal", "morning");
+   
+   Gazibur.presentation.call(halima, "friendly", "afternoon");
+   
+   //Gazibur.presentation.apply(halima, ['friendly', 'afternoon']);
+   
+   var GaziburFriendly = Gazibur.presentation.bind(Gazibur, "friendly");
+   
+   GaziburFriendly("morning");
+   GaziburFriendly("night");
+   
+   var halimaFormal = Gazibur.presentation.bind(halima, "formal");
+   halimaFormal("afternoon"); //
+   
+   /////////////////////////////////
+   // Lecture: let and const
+   
+   // ES5
+   var name5 = "azizul hoque";
+   var age5 = 23;
+   name5 = "azizul hoque";
+   console.log(name5); //azizul hoque
+   
+   // ES6
+   const name6 = "azizul Rahman";
+   let age6 = 23;
+   // name6 = 'azizul hoque';
+   console.log(name6); //azizul hoque
+   
+   // ES5
+   function driversLicence5(passedTest) {
+    if (passedTest) {
+     console.log(firstName); //undefined
+     var firstName = "Gazibur";
+     var yearOfBirth = 1990;
+    }
+   
+    console.log(
+     firstName +
+     ", born in " +
+     yearOfBirth +
+     ", is now officially allowed to drive a car."
+    ); //Gazibur, born in 1990, is now officially allowed to drive a car.
+   }
+   
+   driversLicence5(true);
+   
+   // ES6
+   function driversLicence6(passedTest) {
+    //console.log(firstName);//
+    let firstName;
+    const yearOfBirth = 1990;
+   
+    if (passedTest) {
+     firstName = "Gazibur";
+    }
+   
+    console.log(
+     firstName +
+     ", born in " +
+     yearOfBirth +
+     ", is now officially allowed to drive a car."
+    ); //Gazibur, born in 1990, is now officially allowed to drive a car
+   }
+   
+   driversLicence6(true);
+   
+   var i = 23;
+   
+   for (var i = 0; i < 5; i++) {
+    console.log(i); //0 to 4
+   }
+   
+   console.log(i); //5 //
+   
+   /////////////////////////////////
+   // Lecture: Blocks and IIFEs
+   
+   // ES6
+   {
+    const a = 1;
+    let b = 2;
+    var c = 3;
+   }
+   
+   //console.log(a + b);//
+   console.log(c); //3
+   
+   // ES5
+   (function() {
+    var c = 3;
+   })(); //
+   
+   //console.log(c);//
+   
+   /////////////////////////////////
+   // Lecture: Strings
+   
+   let firstname1 = "Gazibur";
+   let lastname1 = "Rahman";
+   const yearOfBirth = 1990;
+   
+   function calcAge(year) {
+    return 2016 - year;
+   }
+   
+   // ES5
+   console.log(
+    "This is " +
+    firstname1 +
+    " " +
+    lastname1 +
+    ". He was born in " +
+    yearOfBirth +
+    ". Today, he is " +
+    calcAge(yearOfBirth) +
+    " years old."
+   ); //This is Gazibur Rahman. He was born in 1990. Today, he is 26 years old.
+   
+   // ES6
+   console.log(
+    `This is ${firstname1} ${lastname1}. He was born in ${yearOfBirth}. Today, he is ${calcAge(
+     yearOfBirth
+   )} years old.`
+   ); //This is Gazibur Rahman. He was born in 1990. Today, he is 26 years old.
+   
+   const n = `${firstname1} ${lastname1}`;
+   console.log(n.startsWith("j")); //false
+   console.log(n.endsWith("Sm")); //false
+   console.log(n.includes("oh")); //true
+   console.log(`${firstname1} `.repeat(5)); //Gazibur Gazibur Gazibur Gazibur Gazibur
+   
+   //
+   
+   // Lecture: Arrow functions
+   
+   const years1 = [1990, 1965, 1982, 1937];
+   
+   // ES5
+   var ages5 = years1.map(function(el) {
+    return 2016 - el;
+   });
+   console.log(ages5); //(4) [26, 51, 34, 79]
+   
+   // ES6
+   let ages6 = years1.map((el) => 2016 - el);
+   console.log(ages6); //(4) [26, 51, 34, 79]
+   
+   ages6 = years1.map((el, index) => `Age element ${index + 1}: ${2016 - el}.`);
+   console.log(ages6); //(4) ["Age element 1: 26.", "Age element 2: 51.", "Age element 3: 34.", "Age element 4: 79."]
+   
+   ages6 = years1.map((el, index) => {
+    const now = new Date().getFullYear();
+    const age = now - el;
+    return `Age element ${index + 1}: ${age}.`;
+   });
+   console.log(ages6); //(4) ["Age element 1: 30.", "Age element 2: 55.", "Age element 3: 38.", "Age element 4: 83."] //
+   
+   /////////////////////////////////
+   // {Lecture: Arrow functions 2
+   // ES5
+   var box5 = {
+    color: "green",
+    position: 1,
+    clickMe: function() {
+     var self = this;
+     document.querySelector(".green").addEventListener("click", function() {
+      var str =
+       "This is box number " + self.position + " and it is " + self.color;
+      alert(str);
+     });
+    },
+   };
+   //box5.clickMe();
+   
+   // ES6
+   const box6 = {
+    color: "green",
+    position: 1,
+    clickMe: function() {
+     document.querySelector(".green").addEventListener("click", () => {
+      var str =
+       "This is box number " + this.position + " and it is " + this.color;
+      alert(str);
+     });
+    },
+   };
+   box6.clickMe();
+   
+   const box66 = {
+    color: "green",
+    position: 1,
+    clickMe: () => {
+     document.querySelector(".green").addEventListener("click", () => {
+      var str =
+       "This is box number " + this.position + " and it is " + this.color;
+      alert(str);
+     });
+    },
+   };
+   box66.clickMe();
+   
+   function Person(name) {
+    this.name = name;
+   }
+   
+   // ES5
+   Person.prototype.myFriends5 = function(friends) {
+    var arr = friends.map(
+     function(el) {
+      return this.name + " is friends with " + el;
+     }.bind(this)
+    );
+   
+    console.log(arr); //(3) ["Gazibur is friends with Bob", "Gazibur is friends with azizul", "Gazibur is friends with Junaid"]
+   };
+   
+   var friends = ["Bob", "azizul", "Junaid"];
+   new Person("Gazibur").myFriends5(friends);
+   
+   // ES6
+   Person.prototype.myFriends6 = function(friends) {
+    var arr = friends.map((el) => `${this.name} is friends with ${el}`);
+   
+    console.log(arr); //(3) ["Mike is friends with Bob", "Mike is friends with azizul", "Mike is friends with Junaid"]
+   };
+   
+   new Person("Mike").myFriends6(friends);
+   
+   /////////////////////////////////
+   // Lecture: Destructuring
+   
+   // ES5
+   var Gazi = ["Gaziburr", 26];
+   //var name = Gazi[0];
+   //var age = Gazi[1];
+   // ES6
+   const [Name, Age] = ["Gaziburr", 26];
+   console.log(Name); //Gaziburr
+   console.log(Age); //26
+   const OBJ = {
+    FirstName: "Gaziburr",
+    LastName: "Rahman",
+   };
+   const { FirstName, LastName } = OBJ;
+   console.log(FirstName); //Gaziburr
+   console.log(LastName); //Rahman
+   const { FirstName: A, LastName: B } = OBJ;
+   console.log(A); //Gaziburr
+   console.log(B); // Rahman
+   function calcAgeRetirement(year) {
+    const Age = new Date().getFullYear() - year;
+    return [Age, 65 - Age];
+   }
+   const [age2, Retirement] = calcAgeRetirement(1990);
+   console.log(age2); //30
+   console.log(Retirement); //35 //
+   
+   /////////////////////////////////
+   // Lecture: Arrays
+   
+   //This code is executed in HTML file(body).
+   
+   const boxes = document.querySelectorAll(".box");
+   
+   //ES5
+   var boxesArr5 = Array.prototype.slice.call(boxes);
+   boxesArr5.forEach(function(cur) {
+    cur.style.backgroundColor = "dodgerblue";
+   });
+   
+   //ES6
+   const boxesArr6 = Array.from(boxes);
+   Array.from(boxes).forEach((cur) => (cur.style.backgroundColor = "dodgerblue"));
+   
+   //ES5
+   for (var i = 0; i < boxesArr5.length; i++) {
+    if (boxesArr5[i].className === "box blue") {
+     continue;
+    }
+   
+    boxesArr5[i].textContent = "I changed to blue!";
+   }
+   
+   //ES6
+   for (const cur of boxesArr6) {
+    if (cur.className.includes("blue")) {
+     continue;
+    }
+    cur.textContent = "I changed to blue!";
+   }
+   
+   //ES5
+   var ages = [12, 17, 8, 21, 14, 11];
+   
+   var full = ages.map(function(cur) {
+    return cur >= 18;
+   });
+   console.log(full); //(6) [false, false, false, true, false, false]
+   
+   console.log(full.indexOf(true)); //3
+   console.log(ages[full.indexOf(true)]); //21
+   
+   //ES6
+   console.log(ages.findIndex((cur) => cur >= 18)); //3
+   console.log(ages.find((cur) => cur >= 18)); //21 //
+   // Lecture: Spread operator
+   
+   function addFourAges(a, b, c, d) {
+    return a + b + c + d;
+   }
+   
+   var sum1 = addFourAges(18, 30, 12, 21);
+   console.log(sum1); //81
+   
+   //ES5
+   var ages = [18, 30, 12, 21];
+   var sum2 = addFourAges.apply(null, ages);
+   console.log(sum2); //81
+   
+   //ES6
+   const sum3 = addFourAges(...ages);
+   console.log(sum3); //81
+   
+   const familyRahman = ["Gazibur", "azizul", "Junaid"];
+   const familyhoque = ["Mary", "Bob", "Ann"];
+   const bigFamily = [...familyRahman, "Lily", ...familyhoque];
+   console.log(bigFamily); //(7) ["Gazibur", "azizul", "Junaid", "Lily", "Mary", "Bob", "Ann"]
+   
+   const h = document.querySelector("h1");
+   const boxes1 = document.querySelectorAll(".box");
+   const all = [h, ...boxes1];
+   
+   // Array.from(all).forEach(cur => cur.style.color = 'purple');
+   
+   /////////////////////////////////
+   // Lecture: Rest parameters
+   
+   //ES5
+   function isFullAge5() {
+    //console.log(arguments);//
+    var argsArr = Array.prototype.slice.call(arguments);
+   
+    argsArr.forEach(function(cur) {
+     console.log(2016 - cur >= 18); //
+    });
+   }
+   
+   isFullAge5(1990, 1999, 1965);
+   isFullAge5(1990, 1999, 1965, 2016, 1987);
+   
+   //ES6
+   function isFullAge6(...years) {
+    years.forEach((cur) => console.log(2016 - cur >= 18)); //
+   }
+   
+   isFullAge6(1990, 1999, 1965, 2016, 1987);
+   
+   //ES5
+   function isFullAge5(limit) {
+    var argsArr = Array.prototype.slice.call(arguments, 1);
+   
+    argsArr.forEach(function(cur) {
+     console.log(2016 - cur >= limit); //false
+    });
+   }
+   
+   //isFullAge5(16, 1990, 1999, 1965);
+   isFullAge5(1990, 1999, 1965, 2016, 1987);
+   
+   //ES6
+   function isFullAge6(limit, ...years) {
+    years.forEach((cur) => console.log(2016 - cur >= limit)); //false true false true
+   }
+   
+   isFullAge6(16, 1990, 1999, 1965, 2016, 1987);
+   
+   //
+   /////////////////////////////////
+   // Lecture: Default parameters
+   
+   // ES5
+   function RahmanPerson(firstName2, yearOfBirth, lastName, nationality) {
+    lastName === undefined ? (lastName = "Rahman") : (lastName = lastName);
+    nationality === undefined ?
+     (nationality = "american") :
+     (nationality = nationality);
+   
+    this.firstName2 = firstName2;
+    this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality;
+   }
+   
+   //ES6
+   function RahmanPerson(
+    firstName2,
+    yearOfBirth,
+    lastName2 = "Rahman",
+    nationality = "american"
+   ) {
+    this.firstName2 = firstName2;
+    this.lastName2 = lastName2;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality;
+   }
+   
+   var Gazibur = new RahmanPerson("Gazibur", 1990);
+   var halima = new RahmanPerson("halima", 1983, "Diaz", "spanish");
+   
+   // Lecture: Maps
+   
+   const question = new Map();
+   question.set(
+    "question",
+    "What is the official name of the latest major JavaScript version?"
+   );
+   question.set(1, "ES5");
+   question.set(2, "ES6");
+   question.set(3, "ES2015");
+   question.set(4, "ES7");
+   question.set("correct", 3);
+   question.set(true, "Correct answer :D");
+   question.set(false, "Wrong, please try again!");
+   
+   console.log(question.get("question")); //What is the official name of the latest major JavaScript version?
+   //console.log(question.size);//
+   
+   if (question.has(4)) {
+    //question.delete(4);
+    //console.log('Answer 4 is here')//
+   }
+   
+   //question.clear();
+   
+   //question.forEach((value, key) => console.log(`This is ${key}, and it's set to ${value}`));//
+   
+   for (let [key, value] of question.entries()) {
+    if (typeof key === "number") {
+     console.log(`Answer ${key}: ${value}`); //Answer 1: ES5    Answer 2: ES6    Answer 3: ES2015    Answer 4: ES7
+    }
+   }
+   
+   const ans = parseInt(console.log("Write the correct answer"));
+   console.log(question.get(ans === question.get("correct"))); //Wrong, please try again! //
+   
+   /////////////////////////////////
+   // Lecture: Classes
+   
+   //ES5
+   var Person5 = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+   };
+   
+   Person5.prototype.calculateAge = function() {
+    var age = new Date().getFullYear - this.yearOfBirth;
+    console.log(age); //
+   };
+   
+   var Gazibur5 = new Person5("Gazibur", 1990, "teacher");
+   
+   //ES6
+   class Person6 {
+    constructor(name, yearOfBirth, job) {
+     this.name = name;
+     this.yearOfBirth = yearOfBirth;
+     this.job = job;
+    }
+   
+    calculateAge() {
+     var age = new Date().getFullYear - this.yearOfBirth;
+     console.log(age); //
+    }
+   
+    static greeting() {
+     console.log("Hey there!"); //Hey there!
+    }
+   }
+   
+   const Gazibur6 = new Person6("Gazibur", 1990, "teacher");
+   
+   Person6.greeting(); //
+   
+   /////////////////////////////////
+   // Lecture: Classes and subclasses
+   
+   //ES5
+   var Person5 = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+   };
+   
+   Person5.prototype.calculateAge = function() {
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age); //30
+ };
+ 
+ var Athlete5 = function(name, yearOfBirth, job, olymicGames, medals) {
+Person5.call(this, name, yearOfBirth, job);
+this.olymicGames = olymicGames;
+this.medals = medals;
+ };
+ 
+ Athlete5.prototype = Object.create(Person5.prototype);
+ 
+ Athlete5.prototype.wonMedal = function() {
+this.medals++;
+console.log(this.medals); //11
+ };
+ 
+ var GaziburAthlete5 = new Athlete5("Gazibur", 1990, "swimmer", 3, 10);
+ 
+ GaziburAthlete5.calculateAge();
+ GaziburAthlete5.wonMedal();
+ 
+ //ES6
+ class person7 {
+constructor(name, yearOfBirth, job) {
+ this.name = name;
+ this.yearOfBirth = yearOfBirth;
+ this.job = job;
+}
+ 
+calculateAge() {
+ var age = new Date().getFullYear() - this.yearOfBirth;
+ console.log(age); //30
+}
+ }
+ 
+ class Athlete6 extends person7 {
+constructor(name, yearOfBirth, job, olympicGames, medals) {
+ super(name, yearOfBirth, job);
+ this.olympicGames = olympicGames;
+ this.medals = medals;
+}
+ 
+wonMedal() {
+ this.medals++;
+ console.log(this.medals); //11
+}
+ }
+ 
+ const GaziburAthlete6 = new Athlete6("Gazibur", 1990, "swimmer", 3, 10);
+ 
+ GaziburAthlete6.wonMedal();
+ GaziburAthlete6.calculateAge(); //
+ 
+ /////////////////////////////////
+ // CODING CHALLENGE
+ 
+ /*
+ 
+ Suppose that youre working in a small town administration, and youre in charge of two town elements:
+ 1. Parks
+ 2. Streets
+ 
+ It's a very small town, so right now there are only 3 parks and 4 streets. All parks and streets have a name and a build year.
+ 
+ At an end-of-year meeting, your boss wants a final report with the following:
+ 1. Tree density of each park in the town (forumla: number of trees/park area)
+ 2. Average age of each town's park (forumla: sum of all ages/number of parks)
+ 3. The name of the park that has more than 1000 trees
+ 4. Total and average length of the town's streets
+ 5. Size classification of all streets: tiny/small/normal/big/huge. If the size is unknown, the default is normal
+ 
+ All the report data should be printed to the console.
+ 
+ HINT: Use some of the ES6 features: classes, subclasses, template strings, default parameters, maps, arrow functions, destructuring, etc.
+ 
+ */
+ 
+ class Element {
+constructor(name, buildYear) {
+ this.name = name;
+ this.buildYear = buildYear;
+}
+ }
+ 
+ class Park extends Element {
+constructor(name, buildYear, area, numTrees) {
+ super(name, buildYear);
+ this.area = area; //km2
+ this.numTrees = numTrees;
+}
+ 
+treeDensity() {
+ const density = this.numTrees / this.area;
+ console.log(
+`\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${this.name} has a tree density of \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${density} trees per square km.`
+ );
+ /* //Green Park has a tree density of 1075 trees per square km.
+    National Park has a tree density of 1221.0344827586207 trees per square km.
+    Oak Park has a tree density of 2372.5 trees per square km. */
+}
+ }
+ 
+ class Street extends Element {
+constructor(name, buildYear, length, size = 3) {
+ super(name, buildYear);
+ this.length = length;
+ this.size = size;
+}
+ 
+classifyStreet() {
+ const classification = new Map();
+ classification.set(1, "tiny");
+ classification.set(2, "small");
+ classification.set(3, "normal");
+ classification.set(4, "big");
+ classification.set(5, "huge");
+ console.log(
+`\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${this.name}, build in \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${this.buildYear}, is a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${classification.get(
+ this.size
+ )} street.`
+ );
+ /* Ocean Avenue, build in 1999, is a big street.
+    1718 Evergreen Street, build in 2008, is a small street.
+    1718 4th Street, build in 2015, is a normal street.
+    1718 Sunset Boulevard, build in 1982, is a huge street. */
+}
+ }
+ 
+ const allParks = [
+ new Park("Green Park", 1987, 0.2, 215),
+ new Park("National Park", 1894, 2.9, 3541),
+ new Park("Oak Park", 1953, 0.4, 949),
+ ];
+ 
+ const allStreets = [
+ new Street("Ocean Avenue", 1999, 1.1, 4),
+ new Street("Evergreen Street", 2008, 2.7, 2),
+ new Street("4th Street", 2015, 0.8),
+ new Street("Sunset Boulevard", 1982, 2.5, 5),
+ ];
+ 
+ function calc(arr) {
+const sum = arr.reduce((prev, cur, index) => prev + cur, 0);
+ 
+return [sum, sum / arr.length];
+ }
+ 
+ function reportParks(p) {
+console.log("-----PARKS REPORT-----"); //-----PARKS REPORT-----
+ 
+// Density
+p.forEach((el) => el.treeDensity());
+ 
+// Average age
+const ages = p.map((el) => new Date().getFullYear() - el.buildYear);
+const [totalAge, avgAge] = calc(ages);
+console.log(`Our \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${p.length} parks have an average of \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${avgAge} years.`); //Our 3 parks have an average of 75.33333333333333 years.
+ 
+// Which park has more than 1000 trees
+const i = p.map((el) => el.numTrees).findIndex((el) => el >= 1000);
+console.log(`\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${p[i].name} has more than 1000 trees.`); //National Park has more than 1000 trees.
+ }
+ 
+ function reportStreets(s) {
+console.log("-----STREETS REPORT-----"); //-----STREETS REPORT-----
+ 
+//Total and average length of the town's streets
+const [totalLength, avgLength] = calc(s.map((el) => el.length));
+console.log(
+ `Our \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${s.length} streets have a total length of \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${totalLength} km, with an average of \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\${avgLength} km.`
+); //Our 4 streets have a total length of 7.1000000000000005 km, with an average of 1.7750000000000001 km.
+ 
+// CLassify sizes
+s.forEach((el) => el.classifyStreet());
+ }
+ 
+ reportParks(allParks);
+ reportStreets(allStreets);
+ 
+ // // EXAMINE THE DOCUMENT OBJECT
+ 
+ console.dir(document); //#document
+ console.log(document.domain); //127.0.0.1
+ console.log(document.URL); //http://127.0.0.1:5500/a%20basics/index.html
+ console.log(document.title); //Item Lister
+ document.title = "Javascript Reference Gazibur"
+ console.log(document.doctype); //<!DOCTYPE html>
+ console.log(document.head); //all elements inside body head tag
+ console.log(document.body); //all elements inside body tag
+ console.log(document.all); //all elements
+ console.log(document.all[10]); //11th elements in all elements
+ // document.all[10].textContent = "Hello";
+ console.log(document.forms[0]);
+ console.log(document.links);
+ console.log(document.images);
+ 
+ // // GETELEMENTBYID
+ 
+ console.log(document.getElementById("header-title"));
+ var headerTitle = document.getElementById("header-title");
+ var header = document.getElementById("main-header");
+ console.log(headerTitle);
+ headerTitle.textContent = "Hello";
+ headerTitle.innerText = "Goodbye";
+ console.log(headerTitle.innerText);
+ // headerTitle.innerHTML = "<h3>Hello</h3>";
+ header.style.borderBottom = "solid 3px #000";
+ 
+ // // GETELEMENTSBYCLASSNAME //
+ var items = document.getElementsByClassName("list-group-item");
+ console.log(items); //HTMLCollection(4) [li.list-group-item, li.list-group-item, li.list-group-item, li.list-group-item]
+ console.log(items[1]);
+ items[1].textContent = "Hello 2";
+ items[1].style.fontWeight = "bold";
+ items[1].style.backgroundColor = "yellow";
+ 
+ // // Gives error
+ //items.style.backgroundColor = '#f4f4f4';
+ 
+ for (var i = 0; i < items.length; i++) {
+items[i].style.backgroundColor = "#f4f4f4";
+ }
+ 
+ // GETELEMENTSBYTAGNAME //
+ var li = document.getElementsByTagName("li");
+ console.log(li); //HTMLCollection(4) [li.list-group-item, li.list-group-item, li.list-group-item, li.list-group-item]0: li.list-group-item1: li.list-group-item2: li.list-group-item3: li.list-group-itemlength: 4__proto__: HTMLCollection
+ 
+ console.log(li[1]);
+ li[1].textContent = "Hello 2";
+ li[1].style.fontWeight = "bold";
+ li[1].style.backgroundColor = "yellow";
+ 
+ // // Gives error
+ //items.style.backgroundColor = '#f4f4f4';
+ 
+ for (var i = 0; i < li.length; i++) {
+li[i].style.backgroundColor = "#f4f4f4";
+ }
+ 
+ // QUERYSELECTOR //
+ var header = document.querySelector("#main-header");
+ header.style.borderBottom = "solid 4px #ccc";
+ 
+ var input = document.querySelector("input");
+ input.value = "Hello World";
+ 
+ var submit = document.querySelector('input[type="submit"]');
+ submit.value = "SEND";
+ 
+ var item = document.querySelector(".list-group-item");
+ item.style.color = "red";
+ 
+ var lastItem = document.querySelector(".list-group-item:last-child");
+ lastItem.style.color = "yellow";
+ 
+ var secondItem = document.querySelector(".list-group-item:nth-child(2)");
+ secondItem.style.color = "coral";
+ 
+ // // QUERYSELECTORALL //
+ var titles = document.querySelectorAll(".title");
+ 
+ console.log(titles);
+ // titles[0].textContent = "Hello";
+ 
+ var odd = document.querySelectorAll("li:nth-child(odd)");
+ var even = document.querySelectorAll("li:nth-child(even)");
+ 
+ for (var i = 0; i < odd.length; i++) {
+odd[i].style.backgroundColor = "#f4f4f4";
+even[i].style.backgroundColor = "#ccc";
+ }
+ 
+ // // TRAVERSING THE DOM
+ var itemList = document.querySelector("#items");
+ // parentNode
+ 
+ console.log(itemList.lastChild);
+ // lastElementChild
+ console.log(itemList.lastElementChild);
+ itemList.lastElementChild.textContent = "Hello 4";
+ 
+ // nextSibling
+ console.log(itemList.nextSibling);
+ // nextElementSibling
+ console.log(itemList.nextElementSibling);
+ 
+ // previousSibling
+ console.log(itemList.previousSibling);
+ // previousElementSibling
+ itemList.previousElementSibling.textContent =
+"You are on the way to become a javascript developer";
+ console.log(itemList.previousElementSibling);
+ 
+ // // createElement
+ 
+ // Create a div
+ var newDiv = document.createElement("div");
+ 
+ // Add class
+ // newDiv.className = "hello";
+ 
+ // Add id
+ newDiv.id = "hello1";
+ 
+ // Add attr
+ newDiv.setAttribute("title", "Hello Div");
+ console.log(newDiv.attributes);
+ // Create text node
+ var newDivText = document.createTextNode("Hello World");
+ 
+ // Add text to div
+ newDiv.appendChild(newDivText);
+ 
+ var container = document.querySelector("header .container");
+ var h1 = document.querySelector("header h1");
+ 
+ console.log(newDiv);
+ 
+ newDiv.style.fontSize = "30px";
+ 
+ container.insertBefore(newDiv, h1);
+ 
+ // // EVENTS //
+ 
+ // var button = document.getElementById('button').addEventListener('click', buttonClick);
+ 
+ function buttonClick(e) {
+console.log("Button clicked");
+document.getElementById("header-title").textContent = "Changed";
+document.querySelector("#main").style.backgroundColor = "#f4f4f4";
+console.log(e);
+ 
+console.log(e.target);
+console.log(e.target.id);
+console.log(e.target.className);
+console.log(e.target.classList);
+var output = document.getElementById("output");
+output.innerHTML = "<h3>" + e.target.id + "</h3>";
+ 
+console.log(e.type);
+ 
+console.log(e.clientX);
+console.log(e.clientY);
+ 
+console.log(e.offsetX);
+console.log(e.offsetY);
+ 
+console.log(e.altKey);
+console.log(e.ctrlKey);
+console.log(e.shiftKey);
+ }
+ 
+ var button = document.getElementById("button");
+ var box = document.getElementById("box");
+ 
+ button.addEventListener("click", runEvent);
+ button.addEventListener("dblclick", runEvent);
+ button.addEventListener("mousedown", runEvent);
+ button.addEventListener("mouseup", runEvent);
+ 
+ box.addEventListener("mouseenter", runEvent);
+ box.addEventListener("mouseleave", runEvent);
+ 
+ box.addEventListener("mouseover", runEvent);
+ box.addEventListener("mouseout", runEvent);
+ 
+ box.addEventListener("mousemove", runEvent);
+ 
+ var itemInput = document.querySelector('input[type="text"]');
+ var form = document.querySelector("form");
+ var select = document.querySelector("select");
+ 
+ itemInput.addEventListener("keydown", runEvent);
+ itemInput.addEventListener("keyup", runEvent);
+ itemInput.addEventListener("keypress", runEvent);
+ 
+ itemInput.addEventListener("focus", runEvent);
+ itemInput.addEventListener("blur", runEvent);
+ 
+ itemInput.addEventListener("cut", runEvent);
+ itemInput.addEventListener("paste", runEvent);
+ 
+ itemInput.addEventListener("input", runEvent);
+ 
+ select.addEventListener("change", runEvent);
+ select.addEventListener("input", runEvent);
+ 
+ form.addEventListener("submit", runEvent);
+ 
+ function runEvent(e) {
+e.preventDefault();
+console.log("EVENT TYPE: " + e.type);
+ 
+console.log(e.target.value);
+document.getElementById("output").innerHTML =
+ "<h3>" + e.target.value + "</h3>";
+ 
+output.innerHTML =
+ "<h3>MouseX: " + e.offsetX + " </h3><h3>MouseY: " + e.offsetY + "</h3>";
+ 
+document.body.style.backgroundColor =
+ "rgb(" + e.offsetX + "," + e.offsetY + ", 40)";
+ }
+ 
+ //INSERTING HTML CODE AS A STRING///:--
+ /*
+// <div id="one">one</div>
+ var d1 = document.getElementById('one');
+ d1.insertAdjacentHTML('afterend', '<div id="two">two</div>');
+ 
+ // At this point, the new structure is:
+ // <div id="one">one</div><div id="two">two</div> 
+ 
+ }
+*/
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ // BUDGET CONTROLLER
+var budgetController = (function() {
+var Expense = function(id, description, value) {
+this.id = id;
+this.description = description;
+this.value = value;
+this.percentage = -1;
+};
+Expense.prototype.calcPercentage = function(totalIncome) {
+if (totalIncome > 0) {
+this.percentage = Math.round((this.value / totalIncome) * 100);
+} else {
+this.percentage = -1;
+}
+};
+Expense.prototype.getPercentage = function() {
+return this.percentage;
+};
+var Income = function(id, description, value) {
+this.id = id;
+this.description = description;
+this.value = value;
+};
+var calculateTotal = function(type) {
+var sum = 0;
+data.allItems[type].forEach(function(cur) {
+sum += cur.value;
+});
+data.totals[type] = sum;
+};
+var data = {
+allItems: {
+exp: [],
+inc: []
+},
+totals: {
+exp: 0,
+inc: 0
+},
+budget: 0,
+percentage: -1
+};
+return {
+addItem: function(type, des, val) {
+var newItem, ID;
+//[1 2 3 4 5], next ID = 6
+//[1 2 4 6 8], next ID = 9
+// ID = last ID + 1
+// Create new ID
+if (data.allItems[type].length > 0) {
+ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+} else {
+ID = 0;
+}
+// Create new item based on 'inc' or 'exp' type
+if (type === 'exp') {
+newItem = new Expense(ID, des, val);
+} else if (type === 'inc') {
+newItem = new Income(ID, des, val);
+}
+// Push it into our data structure
+data.allItems[type].push(newItem);
+// Return the new element
+return newItem;
+},
+deleteItem: function(type, id) {
+var ids, index;
+// id = 6
+//data.allItems[type][id];
+// ids = [1 2 4 8]
+//index = 3
+ids = data.allItems[type].map(function(current) {
+return current.id;
+});
+index = ids.indexOf(id);
+if (index !== -1) {
+data.allItems[type].splice(index, 1);
+}
+},
+calculateBudget: function() {
+// calculate total income and expenses
+calculateTotal('exp');
+calculateTotal('inc');
+// Calculate the budget: income - expenses
+data.budget = data.totals.inc - data.totals.exp;
+// calculate the percentage of income that we spent
+if (data.totals.inc > 0) {
+data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+} else {
+data.percentage = -1;
+}
+// Expense = 100 and income 300, spent 33.333% = 100/300 = 0.3333 * 100
+},
+calculatePercentages: function() {
+/*
+a=20
+b=10
+c=40
+income = 100
+a=20/100=20%
+b=10/100=10%
+c=40/100=40%
+*/ 
+data.allItems.exp.forEach(function(cur) {
+cur.calcPercentage(data.totals.inc);
+});
+},
+getPercentages: function() {
+var allPerc = data.allItems.exp.map(function(cur) {
+return cur.getPercentage();
+});
+return allPerc;
+},
+getBudget: function() {
+return {
+budget: data.budget,
+totalInc: data.totals.inc,
+totalExp: data.totals.exp,
+percentage: data.percentage
+};
+},
+testing: function() {
+console.log(data);
+}
+};
+})();
+// UI CONTROLLER
+var UIController = (function() {
+var DOMstrings = {
+inputType: '.add__type',
+inputDescription: '.add__description',
+inputValue: '.add__value',
+inputBtn: '.add__btn',
+incomeContainer: '.income__list',
+expensesContainer: '.expenses__list',
+budgetLabel: '.budget__value',
+incomeLabel: '.budget__income--value',
+expensesLabel: '.budget__expenses--value',
+percentageLabel: '.budget__expenses--percentage',
+container: '.container',
+expensesPercLabel: '.item__percentage',
+dateLabel: '.budget__title--month'
+};
+var formatNumber = function(num, type) {
+var numSplit, int, dec, type;
+/*
++ or - before number
+exactly 2 decimal points
+comma separating the thousands
+2310.4567 -> + 2,310.46
+2000 -> + 2,000.00
+*/
+num = Math.abs(num);
+num = num.toFixed(2);
+numSplit = num.split('.');
+int = numSplit[0];
+if (int.length > 3) {
+int = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, 3); //input 23510, output 23,510
+}
+dec = numSplit[1];
+return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
+};
+var nodeListForEach = function(list, callback) {
+for (var i = 0; i < list.length; i++) { callback(list[i], i); } }; return { getInput: function() { return { type: document.querySelector(DOMstrings.inputType).value, // Will be either inc or exp description: document.querySelector(DOMstrings.inputDescription).value, value: parseFloat(document.querySelector(DOMstrings.inputValue).value) }; }, addListItem: function(obj, type) { var html, newHtml, element; // Create HTML string with placeholder text if (type==='inc' ) { element=DOMstrings.incomeContainer; html='<div class="item clearfix" id="inc-%id%"> <div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>' ; } else if (type==='exp' ) { element=DOMstrings.expensesContainer; html='<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>' ; } // Replace the placeholder text with some actual data newHtml=html.replace('%id%', obj.id); newHtml=newHtml.replace('%description%', obj.description); newHtml=newHtml.replace('%value%', formatNumber(obj.value, type)); // Insert the HTML into the DOM document.querySelector(element).insertAdjacentHTML('beforeend', newHtml); }, deleteListItem: function(selectorID) { var el=document.getElementById(selectorID); el.parentNode.removeChild(el); }, clearFields: function() { var fields, fieldsArr; fields=document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue); fieldsArr=Array.prototype.slice.call(fields); fieldsArr.forEach(function(current, index, array) { current.value="" ; }); fieldsArr[0].focus(); }, displayBudget: function(obj) { var type; obj.budget> 0 ? type = 'inc' : type = 'exp';
+ document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(obj.budget, type);
+ document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(obj.totalInc, 'inc');
+ document.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(obj.totalExp, 'exp');
+ if (obj.percentage > 0) {
+ document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + '%';
+ } else {
+ document.querySelector(DOMstrings.percentageLabel).textContent = '---';
+ }
+ },
+ displayPercentages: function(percentages) {
+ var fields = docume/nt.querySelectorAll(DOMstrings.expensesPercLabel);
+ nodeListForEach(fields, function(current, index) {
+ if (percentages[index] > 0) {
+ current.textContent = percentages[index] + '%';
+ } else {
+ current.textContent = '---';
+ }
+ });
+ },
+ displayMonth: function() {
+ var now, months, month, year;
+ now = new Date();
+ //var christmas = new Date(2016, 11, 25);
+ months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+ month = now.getMonth();
+ year = now.getFullYear();
+ document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year;
+ },
+ changedType: function() {
+ var fields = document.querySelectorAll(
+ DOMstrings.inputType + ',' +
+ DOMstrings.inputDescription + ',' +
+ DOMstrings.inputValue);
+ nodeListForEach(fields, function(cur) {
+ cur.classList.toggle('red-focus');
+ });
+ document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
+ },
+ getDOMstrings: function() {
+ return DOMstrings;
+ }
+ };
+ })();
+ // GLOBAL APP CONTROLLER
+ var controller = (function(budgetCtrl, UICtrl) {
+ var setupEventListeners = function() {
+ var DOM = UICtrl.getDOMstrings();
+ document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+ document.addEventListener('keypress', function(event) {
+ if (event.keyCode === 13 || event.which === 13) {
+ ctrlAddItem();
+ }
+ });
+ document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+ document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
+ };
+ var updateBudget = function() {
+ // 1. Calculate the budget
+ budgetCtrl.calculateBudget();
+ // 2. Return the budget
+ var budget = budgetCtrl.getBudget();
+ // 3. Display the budget on the UI
+ UICtrl.displayBudget(budget);
+ };
+ var updatePercentages = function() {
+ // 1. Calculate percentages
+ budgetCtrl.calculatePercentages();
+ // 2. Read percentages from the budget controller
+ var percentages = budgetCtrl.getPercentages();
+ // 3. Update the UI with the new percentages
+ UICtrl.displayPercentages(percentages);
+ };
+ var ctrlAddItem = function() {
+ var input, newItem;
+ // 1. Get the field input data
+ input = UICtrl.getInput();
+ if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
+ // 2. Add the item to the budget controller
+ newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+ // 3. Add the item to the UI
+ UICtrl.addListItem(newItem, input.type);
+ // 4. Clear the fields
+ UICtrl.clearFields();
+ // 5. Calculate and update budget
+ updateBudget();
+ // 6. Calculate and update percentages
+ updatePercentages();
+ }
+ };
+ var ctrlDeleteItem = function(event) {
+ var itemID, splitID, type, ID;
+ itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+ if (itemID) {
+ //inc-1
+ splitID = itemID.split('-');
+ type = splitID[0];
+ ID = parseInt(splitID[1]);
+ // 1. delete the item from the data structure
+ budgetCtrl.deleteItem(type, ID);
+ // 2. Delete the item from the UI
+ UICtrl.deleteListItem(itemID);
+ // 3. Update and show the new budget
+ updateBudget();
+ // 4. Calculate and update percentages
+ }
+ updatePercentages();
+ };
+ return {
+ init: function() {
+ console.log('Application has started.');
+ UICtrl.displayMonth();
+ UICtrl.displayBudget({
+ budget: 0,
+ totalInc: 0,
+ totalExp: 0,
+ percentage: -1
+ });
+ setupEventListeners();
+ }
+ };
+ })(budgetController, UIController);
+ controller.init();  </script>
+  <script src="a script.js"></script>
+ </body>
+ 
+ </html>
